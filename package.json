@@ -1,7 +1,7 @@
 {
   "name": "slidey-termy",
   "version": "0.0.0",
-  "description": "slides from images and terminals",
+  "description": "slides with images and terminals",
   "main": "index.js",
   "bin": {
     "slidey-termy": "bin/cmd.js"
