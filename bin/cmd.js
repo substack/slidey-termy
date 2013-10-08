@@ -19,9 +19,13 @@ mkdirp.sync(tmpdir);
 
 var slideFile = path.resolve(process.argv[2]);
 fs.writeFileSync(tmpdir + '/slides.markdown', fs.readFileSync(slideFile));
+
+var port = parseInt(process.argv[3] || 8000);
+console.log('http://127.0.0.1:' + port);
+
+var cwd = process.cwd();
 process.chdir(tmpdir);
 
-console.log(path.dirname(slideFile) + '/images');
 var ecstatic = require('ecstatic')(path.dirname(slideFile));
 
 var server = http.createServer(function (req, res) {
@@ -51,15 +55,13 @@ var server = http.createServer(function (req, res) {
     }
     ecstatic(req, res);
 });
-
-var port = parseInt(process.argv[3] || 8000);
 server.listen(8000, '127.0.0.1');
 
-console.log('http://127.0.0.1:' + port);
-
 var sock = shoe(function (stream) {
-    stream.pipe(muxDemux(function (mstream) {
+    var mx = muxDemux(function (mstream) {
         mstream.pipe(shux.createShell(mstream.meta)).pipe(mstream);
-    })).pipe(stream);
+    });
+    stream.pipe(mx).pipe(stream);
+    mx.createReadStream({ type: 'cwd', cwd: cwd });
 });
 sock.install(server, '/sock');

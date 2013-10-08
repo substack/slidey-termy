@@ -8,11 +8,27 @@ var sock = shoe('/sock');
 var muxDemux = require('mux-demux');
 
 var mx = muxDemux();
+mx.on('connection', function (stream) {
+    if (stream.meta.type !== 'cwd') return;
+    var basedir = stream.meta.cwd;
+    queue.forEach(function (ref) {
+        var img = ref[0], ix = ref[1];
+        
+        var alt = JSON.parse(img.getAttribute('alt'));
+        var dir = path.resolve(basedir, alt.cwd);
+        var sh = createShell(ix, dir);
+        sh.appendTo('#slides');
+        var size = getSize();
+        sh.resize(size.width, size.height);
+    });
+});
+
 sock.pipe(mx).pipe(sock);
 
 var slideIndex;
 var terminals = {};
 var slides = [];
+var queue = [];
 var activeTerm;
 
 var src = fs.readFileSync('./slides.markdown', 'utf8');
@@ -23,11 +39,7 @@ var src = fs.readFileSync('./slides.markdown', 'utf8');
         var slide = createSlide(img);
         var src = img.getAttribute('src');
         if (path.basename(src) === 'terminal.png') {
-            var alt = JSON.parse(img.getAttribute('alt'));
-            var sh = createShell(ix, alt.cwd);
-            sh.appendTo('#slides');
-            var size = getSize();
-            sh.resize(size.width, size.height);
+            queue.push([ img, ix ]);
         }
     });
 })(marked(src));
@@ -39,7 +51,8 @@ function createSlide (img) {
     slide.classList.add('slide');
     slide.appendChild(img);
     
-    slide.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
+    //slide.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
+    slide.style.backgroundColor = 'rgb(101,0,170)';
     
     document.querySelector('#slides').appendChild(slide);
     slides.push(slide);
