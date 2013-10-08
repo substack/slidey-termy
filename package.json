@@ -1,0 +1,34 @@
+{
+  "name": "slidey-termy",
+  "version": "0.0.0",
+  "description": "slides from images and terminals",
+  "main": "index.js",
+  "bin": {
+    "slidey-termy": "bin/cmd.js"
+  },
+  "dependencies": {
+    "brfs": "~0.0.8",
+    "ecstatic": "~0.4.11",
+    "exterminate": "~1.4.1",
+    "marked": "~0.2.9",
+    "mux-demux": "~3.7.8",
+    "shoe": "~0.0.15",
+    "shux": "~0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/slidey-termy.git"
+  },
+  "homepage": "https://github.com/substack/slidey-termy",
+  "keywords": [
+    "slide",
+    "talk",
+    "presentation"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
+}
