@@ -2,6 +2,7 @@
 
 var http = require('http');
 var fs = require('fs');
+var path = require('path');
 var marked = require('marked');
 var shoe = require('shoe');
 var shux = require('shux')();
@@ -11,20 +12,35 @@ var browserify = require('browserify');
 
 var clear = new Buffer([ 0x1b, 0x5b, 0x48, 0x1b, 0x5b, 0x32, 0x4a ]);
 
-var ecstatic = require('ecstatic')(__dirname + '/static');
+var os = require('os');
+var mkdirp = require('mkdirp');
+var tmpdir = path.join(os.tmpdir(), '');
+mkdirp.sync(tmpdir);
+
+var slideFile = path.resolve(process.argv[2]);
+fs.writeFileSync(tmpdir + '/slides.markdown', fs.readFileSync(slideFile));
+process.chdir(tmpdir);
+
+console.log(path.dirname(slideFile) + '/images');
+var ecstatic = require('ecstatic')(path.dirname(slideFile));
 
 var server = http.createServer(function (req, res) {
-    if (req.url === '/slides') {
+    if (req.url === '/') {
+        res.setHeader('content-type', 'text/html');
+        fs.createReadStream(__dirname + '/../static/index.html').pipe(res);
+        return;
+    }
+    else if (req.url === '/slides') {
         var ondata = function (err, src) {
             if (err) return res.end(err + '\n');
             res.setHeader('content-type', 'text/html');
             res.end(marked(src))
         };
-        fs.readFile(__dirname + '/readme.markdown', 'utf8', ondata);
+        fs.readFile(slideFile, 'utf8', ondata);
         return;
     }
     else if (req.url === '/bundle.js') {
-        var b = browserify(__dirname + '/browser.js');
+        var b = browserify(__dirname + '/../browser.js');
         b.transform('brfs');
         b.bundle().pipe(res);
         return;

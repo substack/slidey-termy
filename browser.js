@@ -15,7 +15,7 @@ var terminals = {};
 var slides = [];
 var activeTerm;
 
-var src = fs.readFileSync(__dirname + '/../readme.markdown', 'utf8');
+var src = fs.readFileSync('./slides.markdown', 'utf8');
 (function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;

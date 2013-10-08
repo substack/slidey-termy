@@ -13,7 +13,9 @@
     "marked": "~0.2.9",
     "mux-demux": "~3.7.8",
     "shoe": "~0.0.15",
-    "shux": "~0.2.0"
+    "shux": "~0.2.0",
+    "mkdirp": "~0.3.5",
+    "browserify": "~2.34.0"
   },
   "repository": {
     "type": "git",
