@@ -65,9 +65,15 @@ var server = http.createServer(function (req, res) {
     }
     else if (req.url === '/bundle.js') {
         res.setHeader('content-type', 'text/javascript');
-        var s = fs.createReadStream(bundleFile)
-        s.on('error', function (err) { res.end(err + '\n') });
-        return s.pipe(res);
+        (function retry (attempts) {
+            var s = fs.createReadStream(bundleFile);
+            s.once('error', function (err) {
+                if (attempts === 25) res.end(err + '\n')
+                else setTimeout(retry, 250);
+            });
+            s.pipe(res);
+        })(0);
+        return;
     }
     
     if (/^\/static\//.test(req.url)) {
