@@ -24,7 +24,6 @@ var bundleFile = path.join(tmpdir, 'bundle-' + Math.random() + '.js');
 mkdirp.sync(tmpdir);
 
 var slideFile = path.resolve(argv._[0]);
-fs.writeFileSync(tmpdir + '/slides.markdown', fs.readFileSync(slideFile));
 
 var port = parseInt(argv.port || argv._[1] || 8000);
 console.log('http://127.0.0.1:' + port);
@@ -36,8 +35,18 @@ var ecstatic = require('ecstatic')(path.dirname(slideFile));
 var args = [ __dirname + '/../browser.js', '-o', bundleFile ];
 if (argv.debug) args.push('-d');
 if (argv.verbose) args.push('-v');
+args.push('-t', require.resolve('envify'));
 args.push('-t', require.resolve('brfs'));
-spawn('watchify', args, { stdio: [ 'ignore', process.stderr, process.stderr ] });
+
+var watchbin = path.join(
+    path.dirname(require.resolve('watchify')),
+    'bin/cmd.js'
+);
+args.unshift(watchbin);
+
+var ps = spawn(process.execPath, args, { env: { MARKDOWN_FILE: slideFile } });
+ps.stderr.pipe(process.stderr);
+ps.stdout.pipe(process.stdout);
 
 var server = http.createServer(function (req, res) {
     if (req.url === '/') {

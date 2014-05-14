@@ -31,7 +31,7 @@ var slides = [];
 var queue = [];
 var activeTerm;
 
-var src = fs.readFileSync('./slides.markdown', 'utf8');
+var src = fs.readFileSync(process.env.MARKDOWN_FILE, 'utf8');
 (function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;
