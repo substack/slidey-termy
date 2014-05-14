@@ -15,7 +15,8 @@
     "shoe": "~0.0.15",
     "shux": "~0.2.0",
     "mkdirp": "~0.3.5",
-    "browserify": "~2.34.0"
+    "watchify": "~0.10.0",
+    "minimist": "~0.1.0"
   },
   "repository": {
     "type": "git",

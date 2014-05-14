@@ -38,7 +38,7 @@ var src = fs.readFileSync('./slides.markdown', 'utf8');
     [].forEach.call(div.querySelectorAll('img'), function (img, ix) {
         var slide = createSlide(img);
         var src = img.getAttribute('src');
-        if (path.basename(src) === 'terminal.png') {
+        if (/^{/.test(img.getAttribute('alt'))) {
             queue.push([ img, ix ]);
         }
     });
@@ -52,7 +52,7 @@ function createSlide (img) {
     slide.appendChild(img);
     
     //slide.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
-    slide.style.backgroundColor = 'rgb(101,0,170)';
+    slide.style.backgroundColor = 'rgb(63,63,63)';
     
     document.querySelector('#slides').appendChild(slide);
     slides.push(slide);
