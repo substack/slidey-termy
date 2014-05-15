@@ -1,0 +1,65 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: monospace;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.reverse-video {
+  background-color: white;
+}
+
+.terminal {
+  display: none;
+  position: absolute;
+  top: 100px;
+  left: 60px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.terminal > div {
+  background-color: rgb(54,0,91);
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border-width: 0px;
+}
+
+.slide {
+  display: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  background-size: 100000% 100%;
+  background-position: 5000px 0px;
+}
+.slide img {
+  height: 100%;
+}
+
+.show {
+  display: block;
+}
+
+#slides {
+  margin: auto;
+  text-align: center;
+}
+
+#clock {
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+#clock:hover {
+  color: rgb(255,127,127);
+}
