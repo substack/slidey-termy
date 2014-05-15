@@ -54,21 +54,41 @@ function createSlide (elems) {
     var slide = document.createElement('div');
     slide.classList.add('slide');
     
-    elems.forEach(function (elem) {
-        slide.appendChild(elem);
-        if (elem.tagName === 'img') {
-            var src = elem.getAttribute('src');
-            if (/^{/.test(img.getAttribute('alt'))) {
-                queue.push([ img, ix ]);
-            }
-        }
-    });
+    var images = document.createElement('div');
+    images.classList.add('images');
     
-    //slide.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
+    var text = document.createElement('div');
+    text.classList.add('text');
+    
+    slide.appendChild(images);
+    slide.appendChild(text);
+    
     slide.style.backgroundColor = 'rgb(63,63,63)';
     
     document.querySelector('#slides').appendChild(slide);
     slides.push(slide);
+    
+    elems.forEach(function (elem) {
+        if (elem.tagName === 'IMG') {
+            var src = elem.getAttribute('src');
+            if (/^{/.test(elem.getAttribute('alt'))) {
+                queue.push([ elem, ix ]);
+            }
+            images.appendChild(elem);
+            function onresize () {
+                text.style.left = elem.offsetLeft + 20;
+                text.style.right = window.innerWidth
+                    - (elem.offsetLeft + elem.width) + 20
+                ;
+            }
+            setTimeout(onresize, 100);
+            window.addEventListener('resize', onresize);
+    
+        }
+        else {
+            text.appendChild(elem);
+        }
+    });
     
     return slide;
 }

@@ -39,7 +39,42 @@ iframe {
   background-size: 100000% 100%;
   background-position: 5000px 0px;
 }
-.slide img {
+
+.slide code {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+.slide .text {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 2em;
+  color: white;
+  text-shadow: 0 0 2px black;
+}
+
+.slide .text h1 {
+  color: orange;
+  margin-top: 0em;
+}
+
+.slide .images {
+  position: absolute;
+  border: 1px solid red;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.slide .images img {
   height: 100%;
 }
 
@@ -49,7 +84,6 @@ iframe {
 
 #slides {
   margin: auto;
-  text-align: center;
 }
 
 #clock {
