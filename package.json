@@ -7,7 +7,7 @@
     "slidey-termy": "bin/cmd.js"
   },
   "dependencies": {
-    "brfs": "~0.0.8",
+    "brfs": "^1.1.1",
     "ecstatic": "~0.4.11",
     "exterminate": "~1.4.1",
     "marked": "~0.2.9",

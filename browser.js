@@ -35,21 +35,34 @@ var src = fs.readFileSync(process.env.MARKDOWN_FILE, 'utf8');
 (function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;
-    [].forEach.call(div.querySelectorAll('img'), function (img, ix) {
-        var slide = createSlide(img);
-        var src = img.getAttribute('src');
-        if (/^{/.test(img.getAttribute('alt'))) {
-            queue.push([ img, ix ]);
+    
+    var current = [];
+    [].forEach.call(div.querySelectorAll('*'), function (elem, ix) {
+        if (elem.tagName === 'H1') {
+            if (current.length) createSlide(current);
+            current = [];
         }
+        current.push(elem);
     });
+    if (current.length) createSlide(current);
+    
 })(marked(src));
 
 show(0);
 
-function createSlide (img) {
+function createSlide (elems) {
     var slide = document.createElement('div');
     slide.classList.add('slide');
-    slide.appendChild(img);
+    
+    elems.forEach(function (elem) {
+        slide.appendChild(elem);
+        if (elem.tagName === 'img') {
+            var src = elem.getAttribute('src');
+            if (/^{/.test(img.getAttribute('alt'))) {
+                queue.push([ img, ix ]);
+            }
+        }
+    });
     
     //slide.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
     slide.style.backgroundColor = 'rgb(63,63,63)';
