@@ -31,7 +31,10 @@ console.log('http://127.0.0.1:' + port);
 var cwd = process.cwd();
 process.chdir(tmpdir);
 
-var ecstatic = require('ecstatic')(path.dirname(slideFile));
+var ecstatic = require('ecstatic');
+var slidest = ecstatic(path.dirname(slideFile));
+var st = ecstatic(__dirname + '/../static');
+
 var args = [ __dirname + '/../browser.js', '-o', bundleFile ];
 if (argv.debug) args.push('-d');
 if (argv.verbose) args.push('-v');
@@ -49,10 +52,8 @@ ps.stderr.pipe(process.stderr);
 ps.stdout.pipe(process.stdout);
 
 var server = http.createServer(function (req, res) {
-    if (req.url === '/') {
-        res.setHeader('content-type', 'text/html');
-        fs.createReadStream(__dirname + '/../static/index.html').pipe(res);
-        return;
+    if (req.url === '/' || req.url === '/style.css') {
+        return st(req, res);
     }
     else if (req.url === '/slides') {
         var ondata = function (err, src) {
@@ -79,7 +80,7 @@ var server = http.createServer(function (req, res) {
     if (/^\/static\//.test(req.url)) {
         req.url = req.url.replace(/^\/static/, '');
     }
-    ecstatic(req, res);
+    slidest(req, res);
 });
 server.listen(8000, '127.0.0.1');
 
