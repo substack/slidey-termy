@@ -55,6 +55,10 @@ var server = http.createServer(function (req, res) {
     if (req.url === '/' || req.url === '/style.css') {
         return st(req, res);
     }
+    else if (/\/\d+\//.test(req.url)) {
+        req.url = '/';
+        return st(req, res);
+    }
     else if (req.url === '/slides') {
         var ondata = function (err, src) {
             if (err) return res.end(err + '\n');
