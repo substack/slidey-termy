@@ -102,6 +102,15 @@ function createSlide (elems) {
         }
     });
     
+    var h1 = slide.querySelector('h1');
+    if (h1 && h1.childNodes.length === 0) {
+        h1.parentNode.removeChild(h1);
+    }
+    var h2 = slide.querySelector('h2');
+    if (h2 && h2.childNodes.length === 0) {
+        h2.parentNode.removeChild(h2);
+    }
+    
     return slide;
 }
 
