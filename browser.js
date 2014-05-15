@@ -72,15 +72,17 @@ function createSlide (elems) {
         if (elem.tagName === 'IMG') {
             var src = elem.getAttribute('src');
             if (/^{/.test(elem.getAttribute('alt'))) {
-                queue.push([ elem, ix ]);
+                queue.push([ elem, slides.length - 1 ]);
             }
             images.appendChild(elem);
+            slide.resize = onresize;
             function onresize () {
                 text.style.left = elem.offsetLeft + 20;
                 text.style.right = window.innerWidth
                     - (elem.offsetLeft + elem.width) + 20
                 ;
             }
+            onresize();
             setTimeout(onresize, 100);
             window.addEventListener('resize', onresize);
     
@@ -99,6 +101,7 @@ function show (n) {
     var prev = document.querySelector('.slide.show');
     if (prev) prev.classList.remove('show');
     slides[n].classList.add('show');
+    if (slides[n].resize) slides[n].resize();
     
     if (activeTerm) activeTerm.terminal.element.classList.remove('show');
     activeTerm = terminals[n];
