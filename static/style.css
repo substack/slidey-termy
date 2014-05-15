@@ -20,7 +20,7 @@ body {
 }
 
 .terminal > div {
-  background-color: rgb(30,24,24);
+  background-color: rgb(28,11,11);
 }
 
 iframe {
@@ -60,6 +60,10 @@ iframe {
 .slide .text h1 {
   color: orange;
   margin-top: 0em;
+}
+
+.slide .text a:link, .slide .text a:visited {
+  color: orange;
 }
 
 .slide .images {

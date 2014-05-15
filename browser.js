@@ -38,7 +38,7 @@ var src = fs.readFileSync(process.env.MARKDOWN_FILE, 'utf8');
     
     var current = [];
     [].forEach.call(div.querySelectorAll('*'), function (elem, ix) {
-        if (elem.tagName === 'H1') {
+        if (elem.tagName === 'H1' || elem.tagName === 'H2') {
             if (current.length) createSlide(current);
             current = [];
         }
@@ -70,7 +70,7 @@ function createSlide (elems) {
     slide.appendChild(images);
     slide.appendChild(text);
     
-    slide.style.backgroundColor = 'rgb(63,63,63)';
+    slide.style.backgroundColor = 'rgb(28,11,11)';
     
     document.querySelector('#slides').appendChild(slide);
     slides.push(slide);
@@ -95,7 +95,7 @@ function createSlide (elems) {
     
         }
         else {
-            if (elem.tagName === 'H1') {
+            if (elem.tagName === 'H1' || elem.tagName === 'H2') {
                 slide.name = elem.textContent;
             }
             text.appendChild(elem);
