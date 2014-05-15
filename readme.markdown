@@ -15,6 +15,10 @@ $ slidey-termy FILE.markdown PORT
 
 then go to http://localhost:PORT.
 
+Use the left and right arrow keys to navigate.
+
+For slides that are terminals, hold down `shift`+`(left|right)`.
+
 # install
 
 With [npm](https://npmjs.org) do:
