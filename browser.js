@@ -173,14 +173,15 @@ function getSize () {
 }
 
 window.addEventListener('keydown', function (ev) {
-    if (ev.keyIdentifier === 'Right') {
+    if ((!activeTerm || ev.shiftKey) && ev.keyIdentifier === 'Right') {
         show(slideIndex + 1);
     }
-    else if (ev.keyIdentifier === 'Left') {
+    else if ((!activeTerm || ev.shiftKey) && ev.keyIdentifier === 'Left') {
         show(slideIndex - 1);
     }
-    if (!activeTerm) return;
-    activeTerm.terminal.keyDown(ev);
+    else if (activeTerm) {
+        activeTerm.terminal.keyDown(ev);
+    }
 });
 
 window.addEventListener('keypress', function (ev) {

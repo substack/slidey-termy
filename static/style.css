@@ -52,12 +52,13 @@ iframe {
   right: 15%;
   padding-top: 20px;
   padding-bottom: 20px;
-  font-size: 2em;
   color: white;
   text-shadow: 0 0 2px black;
+  font-size: 2em;
 }
 
 .slide .text h1 {
+  font-size: 2em;
   color: orange;
   margin-top: 0em;
 }
