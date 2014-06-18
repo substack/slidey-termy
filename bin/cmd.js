@@ -86,7 +86,7 @@ var server = http.createServer(function (req, res) {
     }
     slidest(req, res);
 });
-server.listen(8000, '127.0.0.1');
+server.listen(port, '127.0.0.1');
 
 var sock = shoe(function (stream) {
     var mx = muxDemux(function (mstream) {
